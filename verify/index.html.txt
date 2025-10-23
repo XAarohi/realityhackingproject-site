@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify — Reality Hacking</title>
+<link rel="canonical" href="https://realityhackingproject.com/verify">
+</head><body>
+<h1>Verify Downloads</h1>
+<p>Compare SHA-256 checksums:</p>
+<pre>
+# example
+File: RH_Vol1_Sample.pdf
+SHA256: (paste here)
+
+File: Worksheets_v1.zip
+SHA256: (paste here)
+</pre>
+</body></html>
