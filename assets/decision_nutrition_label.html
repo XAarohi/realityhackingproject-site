@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Nutrition Label</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .input-section {
+            flex: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .input-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .input-row input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-row input[type="text"] {
+            flex: 2;
+        }
+
+        .input-row input[type="number"] {
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .label-text {
+            font-size: 12px;
+            color: #666;
+            min-width: 45px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .nutrition-label {
+            flex: 1;
+            background: white;
+            border: 3px solid black;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Arial Black', sans-serif;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .nutrition-label h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 5px;
+            border-bottom: 8px solid black;
+            padding-bottom: 5px;
+        }
+
+        .nutrition-label h2 {
+            font-size: 14px;
+            font-weight: normal;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid black;
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 5px;
+            border-bottom: 1px solid #ddd;
+            min-height: 60px;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-name {
+            flex: 1.5;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-score {
+            flex: 1;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .result-indicator {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .red {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .yellow {
+            background-color: #ffbb33;
+            color: #333;
+        }
+
+        .green {
+            background-color: #00C851;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+
+        .print-button {
+            background: linear-gradient(135deg, #00C851 0%, #007E33 100%);
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <h2>Decision Input</h2>
+            <div class="input-row">
+                <input type="text" id="name1" placeholder="Decision name...">
+                <span class="label-text">Benefit %</span>
+                <input type="number" id="benefit1" min="0" max="100" placeholder="0">
+                <span class="label-text">Risk %</span>
+                <input type="number" id="risk1" min="0" max="100" placeholder="0">
+            </div>
+            <div class="input-row">
+                <input type="text" id="name2" placeholder="Decision name...">
+                <span class="label-text">Benefit %</span>
+                <input type="number" id="benefit2" min="0" max="100" placeholder="0">
+                <span class="label-text">Risk %</span>
+                <input type="number" id="risk2" min="0" max="100" placeholder="0">
+            </div>
+            <div class="input-row">
+                <input type="text" id="name3" placeholder="Decision name...">
+                <span class="label-text">Benefit %</span>
+                <input type="number" id="benefit3" min="0" max="100" placeholder="0">
+                <span class="label-text">Risk %</span>
+                <input type="number" id="risk3" min="0" max="100" placeholder="0">
+            </div>
+            <div class="input-row">
+                <input type="text" id="name4" placeholder="Decision name...">
+                <span class="label-text">Benefit %</span>
+                <input type="number" id="benefit4" min="0" max="100" placeholder="0">
+                <span class="label-text">Risk %</span>
+                <input type="number" id="risk4" min="0" max="100" placeholder="0">
+            </div>
+            <div class="input-row">
+                <input type="text" id="name5" placeholder="Decision name...">
+                <span class="label-text">Benefit %</span>
+                <input type="number" id="benefit5" min="0" max="100" placeholder="0">
+                <span class="label-text">Risk %</span>
+                <input type="number" id="risk5" min="0" max="100" placeholder="0">
+            </div>
+            <button onclick="generateLabel()">Generate Label</button>
+        </div>
+
+        <div class="nutrition-label">
+            <h1>Decision Facts</h1>
+            <h2>Logical Analysis</h2>
+            <div id="results">
+                <div class="empty-state">
+                    Enter decisions on the left and click<br>"Generate Label" to see analysis
+                </div>
+            </div>
+            <button class="print-button" onclick="window.print()" id="printButton" style="display: none;">Print Label</button>
+        </div>
+    </div>
+
+    <script>
+        function generateLabel() {
+            const resultsDiv = document.getElementById('results');
+            const printButton = document.getElementById('printButton');
+            resultsDiv.innerHTML = '';
+            
+            let hasResults = false;
+
+            for (let i = 1; i <= 5; i++) {
+                const name = document.getElementById(`name${i}`).value.trim();
+                const benefit = parseFloat(document.getElementById(`benefit${i}`).value) || 0;
+                const risk = parseFloat(document.getElementById(`risk${i}`).value) || 0;
+
+                if (name) {
+                    hasResults = true;
+                    const netForce = benefit - risk;
+                    
+                    let colorClass, arrow;
+                    if (netForce <= 50) {
+                        colorClass = 'red';
+                        arrow = '↓';
+                    } else if (netForce <= 75) {
+                        colorClass = 'yellow';
+                        arrow = '≈';
+                    } else {
+                        colorClass = 'green';
+                        arrow = '↑';
+                    }
+
+                    const row = document.createElement('div');
+                    row.className = 'result-row';
+                    row.innerHTML = `
+                        <div class="result-name">${name}</div>
+                        <div class="result-score">${netForce.toFixed(0)}% Beneficial</div>
+                        <div class="result-indicator ${colorClass}">${arrow}</div>
+                    `;
+                    resultsDiv.appendChild(row);
+                }
+            }
+
+            if (!hasResults) {
+                resultsDiv.innerHTML = '<div class="empty-state">Please enter at least one decision</div>';
+                printButton.style.display = 'none';
+            } else {
+                printButton.style.display = 'block';
+            }
+        }
+
+        // Allow Enter key to generate
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateLabel();
+            }
+        });
+    </script>
+</body>
+</html>
